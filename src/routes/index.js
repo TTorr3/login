@@ -1,26 +1,46 @@
 const router = require('express').Router();
+const passport = require('passport');
 
-const User  =require('../models/users');
-
-router.get('/', (req,res) =>{
-    res.json('Hola');
+router.get('/', (req,res) => {
+    res.redirect('/login');
 });
 
-router.get('/register', (req,res)=>{
+router.get('/login', (req, res) => {
+    res.render('login');
+});
+
+router.post('/login', passport.authenticate('loginAuth', {
+    successRedirect: '/profile',
+    failureRedirect: '/login',
+    failureFlash: true,
+    successFlash: true
+}));
+
+router.get('/register', (req, res) => {
     res.render('register');
 });
 
-router.post('/register', async(req,res)=>{
-    const {username, password} = req.body;
-    const user = await User.findOne({username: username});
-    if(user){
-        res.json('El username no esta disponible, por favor elija otro');
-    } else {
-        user.username = username;
-        user.password = password;
-        await user.save();
-        res.json('Felicitaciones, usuario creado!')
-    }
+router.get('/logout', (req,res) => {
+    req.logOut();
+    res.redirect('/');
 });
+
+router.post('/register', passport.authenticate('registerAuth', {
+    successRedirect: '/profile',
+    failureRedirect: '/register',
+    failureFlash: true,
+    successFlash: true
+}));
+
+router.get('/profile', checkAuthentication, (req,res) => {
+    res.render('profile');
+});
+
+function checkAuthentication(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect('/');
+}
 
 module.exports = router;

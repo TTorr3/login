@@ -1,0 +1,36 @@
+<%- layout('layouts/main') %>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Gatitos?</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Perritos?</a>
+          </li>
+        </ul>
+        <div class="navbar-nav d-flex">
+            <a href="/logout" class="nav-link">Exit</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <% if (loginMessage.length >0) { %>
+    <div class="container">
+      <div class="alert alert-info" role="alert">
+          <p><%= loginMessage %></p>
+      </div>
+    </div>
+  <% } %>
+  <% if (registerMessage.length >0) { %>
+    <div class="container">
+      <div class="alert alert-info" role="alert">
+          <p><%= registerMessage %></p>
+      </div>
+    </div>
+  <% } %>
