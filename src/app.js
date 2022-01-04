@@ -4,6 +4,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 const app = express();
+require('./database');
 
 //Configs
 app.set('port', process.env.PORT || 3000);
