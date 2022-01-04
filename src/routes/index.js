@@ -13,7 +13,7 @@ router.get('/register', (req,res)=>{
 router.post('/register', async(req,res)=>{
     const {username, password} = req.body;
     const user = await User.findOne({username: username});
-    if(!user){
+    if(user){
         res.json('El username no esta disponible, por favor elija otro');
     } else {
         user.username = username;
